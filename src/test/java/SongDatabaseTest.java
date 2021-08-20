@@ -1,14 +1,15 @@
-import models.Song;
-import models.SongDatabase;
+import java.util.List;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.List;
+import models.Song;
+import models.SongDatabase;
 
 /**
  * TODO FOR HOMEWORK - SongDatabaseTest.java
- *      [ ] Write the 'testAddDeleteSong' test method
- *      [ ] Write the 'testAddGetDeletePlaylist' test method
+ *      [X] Write the 'testAddDeleteSong' test method
+ *      [X] Write the 'testAddGetDeletePlaylist' test method
  */
 public class SongDatabaseTest {
     /**
@@ -19,16 +20,45 @@ public class SongDatabaseTest {
     public void testAddDeleteSong() {
         // TODO FOR HOMEWORK: Write a test for both adding and deleting songs from a song database
         SongDatabase database = new SongDatabase();
+        Song songOne = new Song("Test Song One", "Tester A");
+        Song songTwo = new Song("Test Song One", "Tester B");
+        
+        database.addSong(songOne);
+        database.addSong(songTwo);
+        
+        Assert.assertTrue(database.getSongArchive().contains(songOne));
+        Assert.assertTrue(database.getSongArchive().contains(songTwo));
+        
+        database.deleteSong(songOne);
+        Assert.assertFalse(database.getSongArchive().contains(songOne));
+        database.deleteSong(songTwo);
+        Assert.assertFalse(database.getSongArchive().contains(songTwo));     
     }
 
     /**
      * TODO FOR HOMEWORK: Write a test for both adding and deleting playlists from a song database
      * This tests adding and deleting playlist
-     */
+     */ 
     @Test
     public void testAddGetDeletePlaylist() {
         // TODO FOR HOMEWORK: Write a test for both adding and deleting playlists from a song database
-        SongDatabase database = new SongDatabase();
+        SongDatabase songDb = new SongDatabase();
+        String testPlaylistOne = "TestPlayListOne";
+        String testPlayListTwo = "TestPlayListTwo";
+        
+        songDb.createPlaylist(testPlaylistOne);
+        songDb.createPlaylist(testPlayListTwo);
+        Assert.assertTrue(songDb.getPlaylists().containsKey(testPlaylistOne));
+        Assert.assertTrue(songDb.getPlaylists().containsKey(testPlayListTwo));
+        
+        songDb.deletePlaylist(testPlaylistOne);
+        Assert.assertFalse(songDb.getPlaylists().containsKey(testPlaylistOne));
+        
+        songDb.deletePlaylist(testPlayListTwo);
+        Assert.assertFalse(songDb.getPlaylists().containsKey(testPlayListTwo));
+        
+        
+        
     }
 
     /**
